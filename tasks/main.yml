@@ -1,0 +1,12 @@
+---
+# tasks file for role_nagios
+- name:  Check requested toto component state is a known state
+  assert:
+    that:
+      - "{{ item.var }} is defined"
+      - "{{ item.var }} is match('{{ item.regex | default('.*') }}')"
+  with_items:
+      - { var: docker_state, regex: "present|absent" }
+
+- include: "{{ docker_state }}.yml"
+  static: no
